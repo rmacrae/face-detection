@@ -468,7 +468,7 @@ def normalize_to_target(inputs,
   This op implements the L2 Normalization layer introduced in
   Liu, Wei, et al. "SSD: Single Shot MultiBox Detector."
   and Liu, Wei, Andrew Rabinovich, and Alexander C. Berg.
-  "Parsenet: Looking wider to see better." and is useful for bringing
+  "Parsenet: Looking wider.py to see better." and is useful for bringing
   activations from multiple layers in a convnet to a standard scale.
 
   Note that the rank of `inputs` must be known and the dimension to which
