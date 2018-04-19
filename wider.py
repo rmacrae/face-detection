@@ -10,7 +10,7 @@ from object_detection.utils import label_map_util
 from object_detection.utils import visualization_utils as vis_util
 
 # Use first camera for video capture (in this case the integrated webcam)
-cap = cv2.VideoCapture(0)
+cap = cv2.VideoCapture("nvcamerasrc ! video/x-raw(memory:NVMM), width=(int)1280, height=(int)720, format=(string)I420, framerate=(fraction)30/1 ! nvvidconv flip-method=0 ! video/x-raw, format=(string)I420 ! videoconvert ! video/x-raw, format=(string)BGR ! appsink")
 sys.path.append("..")
 
 # Path to frozen detection graph.
@@ -66,17 +66,12 @@ with detection_graph.as_default():
             vis_util.visualize_boxes_and_labels_on_image_array(
                 image_np,
                 np.squeeze(boxes),
-                np.squeeze(classes).astype(np.int32),
+                np.squeeze(classes).astype(np.int16),
                 np.squeeze(scores),
                 category_index,
                 use_normalized_coordinates=True,
                 line_thickness=6)
-            # Upscale for MacBook Pro 15" Resolution
-            img = cv2.resize(image_np, (2880, 1800), interpolation=cv2.INTER_LANCZOS4)
-            # Display window fullscreen
-            cv2.namedWindow("Face Detection", cv2.WND_PROP_FULLSCREEN)
-            cv2.setWindowProperty("Face Detection", cv2.WND_PROP_FULLSCREEN, cv2.WINDOW_FULLSCREEN)
-            cv2.imshow('Face Detection', img)
+            cv2.imshow('Face Detection', image_np)
             # Quit if q key is pressed
             if cv2.waitKey(25) & 0xFF == ord('q'):
                 cv2.destroyAllWindows()
